@@ -10,16 +10,16 @@ using namespace std;
 telement*element=new telement;
 int ukupno=0;
 
-struct cetvorka{  
+struct cetvorka{	
 	int ai,bi,ci,di;
 };
 
 cetvorka*podaci;
 telement*red=new telement;
-tpacijent*pomocni=new tpacijent;
+tljudi*pomocni=new tljudi;
 telement*pomocni_red=new telement;
 
-void ispis(tpacijent*covjek){
+void ispis(tljudi*covjek){
 	cout<<"Podaci o osobi\n-----------------------\n";
 	cout<<"Ime= "<<covjek->ime<<endl;
 	cout<<"Prezime= "<<covjek->prezime<<endl;
@@ -51,7 +51,7 @@ void prvi() {
 
 int drugi_zad(){
 	for(int i=0;i<ukupno;i++){
-		tpacijent*covjek=new tpacijent;
+		tljudi*covjek=new tljudi;
 		cout<<"Ime= ";
 		cin>>covjek->ime;
 		cout<<"Prezime= ";
@@ -72,19 +72,19 @@ int drugi_zad(){
 		cout<<"----------------------\n";
 		EnQueueQ(covjek,red);
 	}
-	tpacijent*covjek=new tpacijent;
-	tpacijent novi[ukupno];
-	tpacijent*novi2=new tpacijent;
+	tljudi*covjek=new tljudi;
+	tljudi novi[ukupno];
+	tljudi*novi2=new tljudi;
 	for(int i=0; i<ukupno; i++) {
         novi2=FrontQ(red);
         //cout<<"Novi 2 na poziciji: "<<i<<" je : "<<novi2->ime<<endl;
         DeQueueQ(red);
-        memcpy(&novi[i],novi2,sizeof(tpacijent));
+        memcpy(&novi[i],novi2,sizeof(tljudi));
     }
     for(int i=1; i<ukupno; i++) {
         int j=i-1;
         int pom=novi[i].prioritet;
-        tpacijent pom2=novi[i];
+        tljudi pom2=novi[i];
         while(j>=0&&novi[j].prioritet>pom) {
             novi[j+1]=novi[j--];
             novi[j+1]=pom2;
@@ -93,9 +93,9 @@ int drugi_zad(){
     red=new telement;
     InitQ(red);
     for(int i=0;i<ukupno;i++){
-    	pomocni=new tpacijent;
+    	pomocni=new tljudi;
     	if(novi[i].devizni>10000)cout<<"KLIJENT : "<<novi[i].ime<<", "<<novi[i].prezime<<" ima preko 10000 "<<novi[i].devizni_valuta<<endl;
-    	memcpy(pomocni,&novi[i],sizeof(tpacijent));
+    	memcpy(pomocni,&novi[i],sizeof(tljudi));
     	//cout<<"IMEEEEE= "<<pomocni->ime<<endl;
     	EnQueueQ(pomocni,red);
     	pomocni=FrontQ(red);
@@ -105,20 +105,20 @@ int drugi_zad(){
 
 
 void treci(){
-	tpacijent brze_transakcije[ukupno];
-	tpacijent stare_transakcije[ukupno];
+	tljudi brze_transakcije[ukupno];
+	tljudi stare_transakcije[ukupno];
 	int pomocni_brojac_brze_transakcije=0;
 	int pomocni_brojac_stare_transakcije=0;
-	tpacijent*pomocnipacijent=new tpacijent;
+	tljudi*pomocnipacijent=new tljudi;
 	for(int i=0;i<ukupno;i++){
 		pomocnipacijent=FrontQ(red);
 		//cout<<"Pacijent "<<pomocnipacijent->ime<<endl;
 		if(pomocnipacijent->transakcija==4){
-			memcpy(&brze_transakcije[pomocni_brojac_brze_transakcije],pomocnipacijent,sizeof(tpacijent));
+			memcpy(&brze_transakcije[pomocni_brojac_brze_transakcije],pomocnipacijent,sizeof(tljudi));
 			pomocni_brojac_brze_transakcije++;
 		}
 	    else{
-	    	memcpy(&stare_transakcije[pomocni_brojac_stare_transakcije],pomocnipacijent,sizeof(tpacijent));
+	    	memcpy(&stare_transakcije[pomocni_brojac_stare_transakcije],pomocnipacijent,sizeof(tljudi));
 	    	pomocni_brojac_stare_transakcije++;
 	    }
 		DeQueueQ(red);
@@ -127,7 +127,7 @@ void treci(){
 	cout<<endl<<endl;
 	for(int i=0;i<pomocni_brojac_stare_transakcije;i++){
 		ispis(&stare_transakcije[i]);
-		memcpy(pomocni,&stare_transakcije[i],sizeof(tpacijent));
+		memcpy(pomocni,&stare_transakcije[i],sizeof(tljudi));
 		EnQueueQ(pomocni,red);
 	}
 	ukupno=pomocni_brojac_stare_transakcije;
@@ -140,7 +140,7 @@ void treci(){
 }
 
 void cetvrti(){
-	tpacijent pomocnired[ukupno];
+	tljudi pomocnired[ukupno];
 	int pomocni_brojac=0;
 	for (int i=0;i<ukupno;i++){
 		pomocni=FrontQ(red);
@@ -148,7 +148,7 @@ void cetvrti(){
 			cout<<"Izbacujem osobu: "<<pomocni->ime<<pomocni->prezime<<endl;
 		}
 		else{
-			memcpy(&pomocnired[pomocni_brojac],pomocni,sizeof(tpacijent));
+			memcpy(&pomocnired[pomocni_brojac],pomocni,sizeof(tljudi));
 			pomocni_brojac++;
 		}
 		DeQueueQ(red);
@@ -157,7 +157,7 @@ void cetvrti(){
 	cout<<"Stanje na glavnom stogu\n\n";
 	ukupno=pomocni_brojac;
 	for(int i=0;i<ukupno;i++){
-		memcpy(pomocni,&pomocnired[i],sizeof(tpacijent));
+		memcpy(pomocni,&pomocnired[i],sizeof(tljudi));
 		EnQueueQ(pomocni,red);
 		ispis(pomocni);
 	}
@@ -165,7 +165,7 @@ void cetvrti(){
 
 void peti(int brojac_sedamdeset,int brojac_za_red){
 	if(IsEmptyQ(red)==1)return;
-	tpacijent*p=new tpacijent;
+	tljudi*p=new tljudi;
 	if(brojac_za_red<=brojac_sedamdeset-1){
 		p=FrontQ(red);
 		cout<<"P= "<<p->ime<<endl;
@@ -176,7 +176,7 @@ void peti(int brojac_sedamdeset,int brojac_za_red){
 	else {
 		//cout<<"ulazim gdje je pomocni red\n";
 		while(IsEmptyQ(red)==0){
-			tpacijent*d=new tpacijent;
+			tljudi*d=new tljudi;
 			d=FrontQ(red);
 		//	cout<<"D= "<<d->ime<<endl;
 			EnQueueQ(d,pomocni_red);
@@ -192,7 +192,7 @@ void peti(int brojac_sedamdeset,int brojac_za_red){
 
 void peti_nastavak(telement*neki_red){
 	if(IsEmptyQ(neki_red)==1)return;
-	tpacijent*p=new tpacijent;
+	tljudi*p=new tljudi;
 	p=FrontQ(neki_red);
 	DeQueueQ(neki_red);
 	peti_nastavak(neki_red);
