@@ -1,7 +1,7 @@
 #include <iostream>
 #include <ctime>
-//#include "polja.h"
-#include "pok.h"
+#include "polja.h"
+//#include "pokazivaci.h"
 #include <cstdlib>
 #include <cstring>
 
