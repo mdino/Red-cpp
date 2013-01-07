@@ -1,5 +1,3 @@
-#include <iostream>
-using namespace std;
 
 struct tljudi {
     int xi,yi,prioritet,transakcija,godina;
@@ -7,34 +5,36 @@ struct tljudi {
     float tekuci,devizni;
     tljudi*sljedeci;
 };
+struct telement {
+    tljudi* front,*rear;
+};
 int AddOne(int n) {
     return((n+1)%10000);
 }
-struct telement {
-    tljudi*pacijent[10000];
-    int front,rear;
-};
-void EnQueueQ (tljudi*pacijent, telement *element) {
-    if (AddOne(AddOne(element->rear)) == (element->front))
-        cout<<"RED JE PUN!!\n\n";
-    else {
-        element->rear = AddOne(element->rear);
-        element->pacijent[element->rear] = pacijent;
-    }
+int InitQ(telement*element) {
+    tljudi*glava=new tljudi;
+    glava->sljedeci=NULL;
+    element->front=glava;
+    element->rear=glava;
 }
-int IsEmptyQ(telement*element) {
-    int rear=element->rear;
-    if(AddOne(rear)==element->front)return 1;
+bool IsEmptyQ(telement*element) {
+    if(element->rear==element->front)return 1;
     return 0;
 }
+void EnQueueQ(tljudi*ljudi,telement*element) {
+    element->rear->sljedeci=ljudi;
+    ljudi->sljedeci=NULL;
+    element->rear=ljudi;
+}
 tljudi*FrontQ(telement*element) {
-    if(!IsEmptyQ)cout<<"RED JE PRAZAN!\n";
-    return element->pacijent[element->front];
+    tljudi*ljudi;
+    ljudi=element->front->sljedeci;
+    return ljudi;
 }
 void DeQueueQ(telement*element) {
-    element->front++;
+    tljudi*glava=element->front;
+    element->front=glava->sljedeci;
+    delete glava;
 }
-void InitQ(telement*element) {
-    element->front=0;
-    element->rear=9999;
-}
+
+
